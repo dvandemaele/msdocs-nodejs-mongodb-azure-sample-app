@@ -55,10 +55,23 @@ router.post('/completeTask', function(req, res, next) {
     });
 });
 
+router.post('/incompleteTask', function(req, res, next) {
+  console.log("I am in the PUT method")
+  const taskId = req.body._id;
+  const completedDate = "";
+
+  Task.findByIdAndUpdate(taskId, { completed: false, completedDate: ""})
+    .then(() => { 
+      console.log(`InCompleted task ${taskId}`)
+      res.redirect('/'); }  )
+    .catch((err) => {
+      console.log(err);
+      res.send('Sorry! Something went wrong.');
+    });
+});
 
 router.post('/deleteTask', function(req, res, next) {
   const taskId = req.body._id;
-  const completedDate = Date.now();
   Task.findByIdAndDelete(taskId)
     .then(() => { 
       console.log(`Deleted task $(taskId)`)      
@@ -68,6 +81,5 @@ router.post('/deleteTask', function(req, res, next) {
       res.send('Sorry! Something went wrong.');
     });
 });
-
 
 module.exports = router;
