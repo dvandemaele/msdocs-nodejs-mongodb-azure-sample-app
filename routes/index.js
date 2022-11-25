@@ -19,6 +19,10 @@ router.get('/', function(req, res, next) {
     });
 });
 
+router.get('/myip',function(req, res) {
+  const ipAddress = req.header('x-forwarded-for') || req.socket.remoteAddress;
+  res.send(ipAddress);
+});
 
 router.post('/addTask', function(req, res, next) {
   const taskName = req.body.taskName;
@@ -81,6 +85,5 @@ router.post('/deleteTask', function(req, res, next) {
       res.send('Sorry! Something went wrong.');
     });
 });
-
 
 module.exports = router;
